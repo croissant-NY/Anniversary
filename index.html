@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Anniversary ♡</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #F5EDE9;
+    }
+
+    .widget {
+      text-align: center;
+      background: #F5EDE9;
+      padding: 18px 8px 24px;
+      font-family: Georgia, serif;
+    }
+
+    .label {
+      color: #9F785D;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    .days {
+      color: #735947;
+      font-size: clamp(26px, 6vw, 42px);
+      margin: 12px 0;
+    }
+
+    .since {
+      color: #9F785D;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="widget">
+    <div class="label">
+      TOGETHER FOR
+    </div>
+
+    <div class="days">
+      ♡ Day <span id="count">1</span>
+    </div>
+
+    <div class="since">
+      since 2026.11.03
+    </div>
+  </div>
+
+  <script>
+    function updateDays() {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).formatToParts(new Date());
+
+      const get = type => Number(
+        parts.find(p => p.type === type).value
+      );
+
+      const today = Date.UTC(
+        get("year"),
+        get("month") - 1,
+        get("day")
+      );
+
+      const start = Date.UTC(2026, 10, 3);
+
+      const days = Math.floor(
+        (today - start) / 86400000
+      ) + 1;
+
+      document.getElementById("count").textContent = days;
+    }
+
+    updateDays();
+
+    // 1分ごとに日付を確認して自動更新
+    setInterval(updateDays, 60000);
+  </script>
+</body>
+</html>
